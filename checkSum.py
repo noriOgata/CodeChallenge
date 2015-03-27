@@ -2,9 +2,8 @@
 from flask import Flask, jsonify, abort, request
 import hashlib, urllib
 
-secretKey = "northernLights"
-
 app = Flask(__name__)
+app.secret_key = 'S6I5sAR7JHWqQQ=='
 @app.route('/createchecksum')
 def createCheckSum():
 	if request.args.has_key('url') == False:
@@ -17,7 +16,7 @@ def createCheckSum():
 			s += str(key) + '=' + str(val)
 			mainUrl += '&' + s
 	
-	checkSum = hashlib.md5(secretKey).hexdigest()	
+	checkSum = hashlib.md5(app.secret_key).hexdigest()	
 	returnUrl = mainUrl + "&checksum=" + checkSum
 	return returnUrl 
 
